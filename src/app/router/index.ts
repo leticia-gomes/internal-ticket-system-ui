@@ -4,6 +4,7 @@ import AuthLayout from '@/shared/layouts/AuthLayout.vue'
 import DefaultLayout from '@/shared/layouts/DefaultLayout.vue'
 
 import { authRoutes } from '@/modules/auth/routes'
+import { authGuard } from '@/app/guards/auth.guard'
 import { ticketsRoutes } from '@/modules/tickets/routes'
 import { usersRoutes } from '@/modules/users/routes'
 
@@ -17,14 +18,19 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/',
-    redirect: '/dashboard',
     component: DefaultLayout,
     meta: { requiresAuth: true },
     children: [
       {
+        path: '',
+        redirect: '/dashboard',
+      },
+
+      {
         path: 'dashboard',
         name: 'dashboard',
-        component: () => import('@/modules/dashboard/pages/DashboardPage.vue'),
+        component: () =>
+          import('@/modules/dashboard/pages/DashboardPage.vue'),
       },
 
       ...ticketsRoutes,
@@ -43,5 +49,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
+
+router.beforeEach(authGuard)
 
 export default router
