@@ -12,7 +12,7 @@ export const ticketsRoutes: RouteRecordRaw[] = [
       {
         path: 'new',
         name: 'tickets.create',
-        component: () => import('./pages/CreateTicketPage.vue'),
+        component: () => import('./pages/TicketCreatePage.vue'),
       },
       {
         path: ':id',
@@ -24,7 +24,7 @@ export const ticketsRoutes: RouteRecordRaw[] = [
         path: ':id/edit',
         name: 'tickets.edit',
         props: true,
-        component: () => import('./pages/EditTicketPage.vue'),
+        component: () => import('./pages/TicketEditPage.vue'),
       },
     ],
   },
