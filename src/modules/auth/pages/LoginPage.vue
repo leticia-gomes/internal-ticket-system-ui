@@ -5,8 +5,10 @@ import { useRouter } from 'vue-router'
 
 import { AuthService } from '../services/auth.service'
 import { authStorage } from '@/shared/storage/auth.storage'
+import { useAuthStore } from '../stores/auth.store'
 
 const authService = new AuthService()
+const authStore = useAuthStore()
 
 const router = useRouter()
 
@@ -26,6 +28,11 @@ async function handleSubmit() {
     const response = await authService.login(form)
 
     authStorage.saveToken(response.accessToken)
+
+    await authStore.login({
+      email: form.email,
+      password: form.password,
+    })
 
     router.push('/dashboard')
   } catch {
