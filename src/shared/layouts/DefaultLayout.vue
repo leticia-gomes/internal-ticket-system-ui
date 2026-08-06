@@ -1,13 +1,21 @@
+<script setup lang="ts">
+import AppHeader from '@/shared/components/layout/AppHeader.vue'
+// import AppSidebar from '@/shared/components/layout/AppSidebar.vue'
+// import AppFooter from '@/shared/components/layout/AppFooter.vue'
+</script>
+
 <template>
-  <div class="layout">
-    <AppSidebar />
+  <div class="default-layout">
+    <AppHeader />
 
-    <div class="layout__content">
-      <AppHeader />
+    <div class="content-wrapper">
+      <!-- <AppSidebar /> -->
 
-      <main>
+      <main class="main-content">
         <RouterView />
       </main>
     </div>
+
+    <!-- <AppFooter /> -->
   </div>
 </template>

@@ -5,7 +5,6 @@ import type {
 
 import { useAuthStore } from '@/modules/auth/stores/auth.store'
 
-
 export function authGuard(
   to: RouteLocationNormalized,
   _from: RouteLocationNormalized,
@@ -14,23 +13,19 @@ export function authGuard(
 
   const authStore = useAuthStore()
 
-
   const requiresAuth = to.matched.some(
     route => route.meta.requiresAuth
   )
-
 
   if (requiresAuth && !authStore.isAuthenticated) {
     next('/auth/login')
     return
   }
 
-
   if (to.path === '/auth/login' && authStore.isAuthenticated) {
     next('/dashboard')
     return
   }
-
 
   next()
 }
