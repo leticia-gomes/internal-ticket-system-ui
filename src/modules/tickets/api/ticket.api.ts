@@ -67,6 +67,14 @@ export async function assignUser(
   return data
 }
 
+export async function deleteTicket(
+  id: number,
+): Promise<void> {
+
+  await api.delete(`/tickets/${id}`);
+
+}
+
 export async function addComment(
   ticketId: number,
   content: string,

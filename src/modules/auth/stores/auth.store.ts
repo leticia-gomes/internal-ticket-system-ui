@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import socket from '@/shared/socket/socket';
 
 import { authStorage } from '@/shared/storage/auth.storage';
 import { AuthService } from '../services/auth.service';
@@ -36,12 +37,16 @@ export const useAuthStore = defineStore('auth', {
 
       authStorage.saveToken(response.accessToken);
       authStorage.saveUser(response.user);
+
+      socket.connect()
+
     },
 
     logout() {
 
       this.user = null;
       this.token = null;
+      socket.disconnect()
 
       authStorage.clear();
     }

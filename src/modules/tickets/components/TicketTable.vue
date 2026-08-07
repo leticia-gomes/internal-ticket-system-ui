@@ -5,6 +5,10 @@ import { useTicketStore } from '../stores/ticket.store'
 
 const ticketStore = useTicketStore()
 
+const emit = defineEmits<{
+  delete: [ticketId: number]
+}>()
+
 function formatDate(date: string): string {
   return new Date(date).toLocaleString('pt-BR')
 }
@@ -45,6 +49,7 @@ function formatDate(date: string): string {
         <td>
           <RouterLink :to="`/tickets/${ticket.id}`"> View </RouterLink>
           <RouterLink :to="`/tickets/${ticket.id}/edit`"> Editar </RouterLink>
+          <button type="button" @click="emit('delete', ticket.id)">Delete</button>
         </td>
       </tr>
 

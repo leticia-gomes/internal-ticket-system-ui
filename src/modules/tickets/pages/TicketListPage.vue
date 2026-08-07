@@ -15,6 +15,16 @@ function goTicketCreatePage() {
   router.push({ name: 'tickets.create' })
 }
 
+async function handleDeleteTicket(ticketId: number) {
+  const confirmed = window.confirm('Do you want to delete this ticket?')
+
+  if (!confirmed) {
+    return
+  }
+
+  await ticketStore.deleteTicket(ticketId)
+}
+
 onMounted(() => {
   ticketStore.loadTickets()
 })
@@ -28,6 +38,6 @@ onMounted(() => {
 
     <button type="button" @click="goTicketCreatePage">Novo</button>
 
-    <TicketTable />
+    <TicketTable @delete="handleDeleteTicket" />
   </section>
 </template>
