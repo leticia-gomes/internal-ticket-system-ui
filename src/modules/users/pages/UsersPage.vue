@@ -1,28 +1,34 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+import { useUserStore } from '../stores/user.store'
+
+import UserTable from '../components/UserTable.vue'
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.fetchUsers()
+})
+</script>
+
 <template>
   <main class="users-page">
     <section class="page-header">
-      <div>
-        <h1>Usuários</h1>
+      <h1>Usuários</h1>
 
-        <p>Gerencie os usuários do sistema.</p>
-      </div>
+      <p>Usuários cadastrados no sistema</p>
     </section>
 
-    <section class="empty-card">
-      <p>Módulo de usuários em desenvolvimento.</p>
+    <section class="table-card">
+      <div v-if="userStore.loading">Carregando usuários...</div>
+
+      <UserTable v-else :users="userStore.users" />
     </section>
   </main>
 </template>
 
 <style scoped>
-.users-page {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 25px;
-}
-
 .page-header h1 {
   margin: 0;
 
