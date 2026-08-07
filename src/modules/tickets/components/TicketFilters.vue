@@ -48,6 +48,6 @@ watch(
       </option>
     </select>
 
-    <button type="button" @click="clearFilters">Clear</button>
+    <button type="button" @click="clearFilters">Limpar</button>
   </section>
 </template>

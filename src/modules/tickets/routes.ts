@@ -7,7 +7,7 @@ export const ticketsRoutes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'tickets.index',
-        component: () => import('./pages/TicketsPage.vue'),
+        component: () => import('./pages/TicketListPage.vue'),
       },
       {
         path: 'new',

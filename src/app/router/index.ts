@@ -11,7 +11,7 @@ import { usersRoutes } from '@/modules/users/routes'
 const routes: RouteRecordRaw[] = [
 
   {
-    path: '/auth', // Alterado para /auth caso queira adicionar /auth/register depois
+    path: '/auth',
     component: AuthLayout,
     children: authRoutes,
   },

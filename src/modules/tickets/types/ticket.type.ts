@@ -1,3 +1,4 @@
+import type { TicketComment } from './ticket-comment.type'
 import type { TicketUser } from './ticket-user.type'
 
 export interface Ticket {
@@ -11,6 +12,8 @@ export interface Ticket {
   createdBy: TicketUser
 
   assignedTo: TicketUser | null
+
+  comments: TicketComment[]
 
   createdAt: string
   updatedAt: string
