@@ -14,17 +14,20 @@ function formatDate(date: string): string {
   <table>
     <thead>
       <tr>
-        <th>Title</th>
+        <th>#</th>
+        <th>Título</th>
         <th>Status</th>
-        <th>Priority</th>
-        <th>Assigned To</th>
-        <th>Updated At</th>
-        <th>Actions</th>
+        <th>Prioridade</th>
+        <th>Responsável</th>
+        <th>Atualizado em</th>
+        <th>Ação</th>
       </tr>
     </thead>
 
     <tbody>
       <tr v-for="ticket in ticketStore.tickets" :key="ticket.id">
+        <td>{{ ticket.id }}</td>
+
         <td>{{ ticket.title }}</td>
 
         <td>{{ ticket.status }}</td>
@@ -41,6 +44,7 @@ function formatDate(date: string): string {
 
         <td>
           <RouterLink :to="`/tickets/${ticket.id}`"> View </RouterLink>
+          <RouterLink :to="`/tickets/${ticket.id}/edit`"> Editar </RouterLink>
         </td>
       </tr>
 

@@ -4,6 +4,7 @@ import { TicketService } from '../services/ticket.service';
 import type { TicketFilters } from '../types/ticket-filters.type';
 import type { Ticket } from '../types/ticket.type';
 import type { UpdateTicketRequest } from '../types/update-ticket-request.type';
+import type { CreateTicketRequest } from '../types/create-ticket-request.type';
 
 interface TicketState {
   tickets: Ticket[];
@@ -52,26 +53,74 @@ export const useTicketStore = defineStore('ticket', {
       }
     },
 
+    async createTicket(
+      data: CreateTicketRequest,
+    ): Promise<Ticket> {
+
+      const ticket =
+        await ticketService.create(data)
+
+      this.tickets.push(ticket)
+
+      return ticket
+    },
+
     async updateTicket(
       id: number,
       data: UpdateTicketRequest,
     ): Promise<void> {
 
-      const updatedTicket =
-        await ticketService.update(id, data);
+      await ticketService.update(id, data);
 
+      const updatedTicket =
+        await ticketService.findById(id);
 
       this.selectedTicket = updatedTicket;
-
 
       const index = this.tickets.findIndex(
         ticket => ticket.id === id,
       );
 
+      if (index !== -1) {
+        this.tickets[index] = updatedTicket;
+      }
+
+    },
+
+    async assignUser(
+      ticketId: number,
+      assignedToId: number,
+    ): Promise<void> {
+
+      const updatedTicket =
+        await ticketService.assignUser(
+          ticketId,
+          assignedToId,
+        );
+
+      this.selectedTicket = updatedTicket;
+
+      const index = this.tickets.findIndex(
+        ticket => ticket.id === ticketId,
+      );
 
       if (index !== -1) {
         this.tickets[index] = updatedTicket;
       }
+    },
+
+    async addComment(
+      ticketId: number,
+      content: string,
+    ): Promise<void> {
+
+      await ticketService.addComment(
+        ticketId,
+        content,
+      );
+
+      this.selectedTicket =
+        await ticketService.findById(ticketId);
 
     },
 
