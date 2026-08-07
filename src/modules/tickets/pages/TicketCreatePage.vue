@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import axios from 'axios'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
@@ -26,10 +27,29 @@ async function handleSubmit() {
 
     const ticket = await ticketStore.createTicket(form)
 
+    alert('Ticket criado com sucesso!')
+
     router.push(`/tickets/${ticket.id}`)
   } catch (error) {
-    const err = error as { response?: { data: unknown } }
-    console.log('ERRO CREATE TICKET:', err.response?.data)
+    if (axios.isAxiosError(error)) {
+      const response = error.response?.data
+
+      if (response?.code === 'VALIDATION_ERROR' && response.errors) {
+        const messages = response.errors
+          .map((item: { field: string; message: string }) => `${item.field}: ${item.message}`)
+          .join('\n')
+
+        alert(`${response.message}\n\n${messages}`)
+
+        return
+      }
+
+      alert(response?.message ?? 'Não foi possível criar o ticket.')
+
+      return
+    }
+
+    alert('Não foi possível criar o ticket.')
   } finally {
     loading.value = false
   }

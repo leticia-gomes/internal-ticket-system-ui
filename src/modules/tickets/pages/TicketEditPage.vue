@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { useTicketStore } from '../stores/ticket.store'
 import { useUserStore } from '@/modules/users/stores/user.store'
+import axios from 'axios'
 
 const route = useRoute()
 const router = useRouter()
@@ -52,6 +53,26 @@ async function handleSubmit() {
     })
 
     router.push(`/tickets/${ticketId.value}`)
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const response = error.response?.data
+
+      if (response?.code === 'VALIDATION_ERROR' && response.errors) {
+        const messages = response.errors
+          .map((item: { field: string; message: string }) => `${item.field}: ${item.message}`)
+          .join('\n')
+
+        alert(`${response.message}\n\n${messages}`)
+
+        return
+      }
+
+      alert(response?.message ?? 'Não foi possível alterar o ticket.')
+
+      return
+    }
+
+    alert('Não foi possível alterar o ticket.')
   } finally {
     loading.value = false
   }
