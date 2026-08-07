@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useTicketStore } from '../stores/ticket.store'
+import TicketForm from '../components/TicketForm.vue'
 
 const route = useRoute()
 
@@ -58,5 +59,7 @@ onMounted(() => {
         {{ new Date(ticketStore.selectedTicket.updatedAt).toLocaleString() }}
       </div>
     </div>
+
+    <TicketForm v-if="ticketStore.selectedTicket" :ticket="ticketStore.selectedTicket" />
   </section>
 </template>
