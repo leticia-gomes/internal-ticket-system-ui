@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { TicketService } from '../services/ticket.service';
 import type { TicketFilters } from '../types/ticket-filters.type';
 import type { Ticket } from '../types/ticket.type';
+import type { UpdateTicketRequest } from '../types/update-ticket-request.type';
 
 interface TicketState {
   tickets: Ticket[];
@@ -49,6 +50,29 @@ export const useTicketStore = defineStore('ticket', {
       } finally {
         this.loading = false;
       }
+    },
+
+    async updateTicket(
+      id: number,
+      data: UpdateTicketRequest,
+    ): Promise<void> {
+
+      const updatedTicket =
+        await ticketService.update(id, data);
+
+
+      this.selectedTicket = updatedTicket;
+
+
+      const index = this.tickets.findIndex(
+        ticket => ticket.id === id,
+      );
+
+
+      if (index !== -1) {
+        this.tickets[index] = updatedTicket;
+      }
+
     },
 
     setFilters(filters: TicketFilters): void {
