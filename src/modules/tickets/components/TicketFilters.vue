@@ -2,6 +2,7 @@
 import { watch } from 'vue'
 
 import { useTicketStore } from '../stores/ticket.store'
+import { formatPriority, formatStatus } from '@/shared/utils/ticket'
 
 const ticketStore = useTicketStore()
 
@@ -32,22 +33,72 @@ watch(
 
 <template>
   <section>
-    <select v-model="ticketStore.filters.status">
-      <option value="">All statuses</option>
+    <div class="filters">
+      <div class="field">
+        <label>Status</label>
 
-      <option v-for="status in statuses" :key="status" :value="status">
-        {{ status }}
-      </option>
-    </select>
+        <select v-model="ticketStore.filters.status">
+          <option value="">Todos status</option>
 
-    <select v-model="ticketStore.filters.priority">
-      <option value="">All priorities</option>
+          <option v-for="status in statuses" :key="status" :value="status">
+            {{ formatStatus(status) }}
+          </option>
+        </select>
+      </div>
 
-      <option v-for="priority in priorities" :key="priority" :value="priority">
-        {{ priority }}
-      </option>
-    </select>
+      <div class="field">
+        <label>Prioridade</label>
 
-    <button type="button" @click="clearFilters">Limpar</button>
+        <select v-model="ticketStore.filters.priority">
+          <option value="">Todas propriedades</option>
+
+          <option v-for="priority in priorities" :key="priority" :value="priority">
+            {{ formatPriority(priority) }}
+          </option>
+        </select>
+      </div>
+
+      <button type="button" class="clear-button" @click="clearFilters">Limpar</button>
+    </div>
   </section>
 </template>
+
+<style scoped>
+.filters {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+label {
+  font-size: 14px;
+  color: var(--text-light);
+}
+select {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: white;
+  min-width: 180px;
+}
+.clear-button {
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 8px;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+.clear-button:hover {
+  background: #d1d5db;
+}
+</style>

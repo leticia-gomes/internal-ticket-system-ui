@@ -31,13 +31,77 @@ onMounted(() => {
 </script>
 
 <template>
-  <section>
-    <h1>Tickets</h1>
+  <main class="tickets-page">
+    <section class="page-header">
+      <div>
+        <h1>Tickets</h1>
+
+        <p>Gerencie os chamados do sistema</p>
+      </div>
+
+      <button type="button" class="btn-primary" @click="goTicketCreatePage">+ Novo Ticket</button>
+    </section>
 
     <TicketFilters />
 
-    <button type="button" @click="goTicketCreatePage">Novo</button>
-
-    <TicketTable @delete="handleDeleteTicket" />
-  </section>
+    <section class="table-card">
+      <TicketTable @delete="handleDeleteTicket" />
+    </section>
+  </main>
 </template>
+
+<style scoped>
+.tickets-page {
+  flex-direction: column;
+
+  gap: 25px;
+}
+
+.page-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+
+  color: var(--primary-color);
+}
+
+.page-header p {
+  margin: 5px 0 0;
+
+  color: var(--text-light);
+}
+
+.table-card {
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow);
+}
+
+.btn-primary {
+  background: var(--primary-color);
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+</style>

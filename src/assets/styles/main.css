@@ -1,4 +1,6 @@
 @import './base.css';
+@import './theme.css';
+@import './components.css';
 
 #app {
   max-width: 1280px;
@@ -23,12 +25,12 @@ a,
 
 @media (min-width: 1024px) {
   body {
-    display: flex;
+    display: contents;
     place-items: center;
   }
 
   #app {
-    display: grid;
+    display: contents;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }

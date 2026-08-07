@@ -44,20 +44,24 @@ onMounted(() => {
   <section>
     <h1>Novo Ticket</h1>
 
-    <form @submit.prevent="handleSubmit">
-      <div>
+    <form @submit.prevent="handleSubmit" class="ticket-form">
+      <div class="field">
         <label> Título </label>
 
-        <input v-model="form.title" required />
+        <input v-model="form.title" required placeholder="Digite o título do ticket" />
       </div>
 
-      <div>
+      <div class="field">
         <label> Descrição </label>
 
-        <textarea v-model="form.description" required />
+        <textarea
+          v-model="form.description"
+          required
+          placeholder="Descreva o problema ou solicitação"
+        />
       </div>
 
-      <div>
+      <div class="field">
         <label> Prioridade </label>
 
         <select v-model="form.priority">
@@ -71,7 +75,7 @@ onMounted(() => {
         </select>
       </div>
 
-      <div>
+      <div class="field">
         <label> Responsável </label>
 
         <select v-model="form.assignedToId">
@@ -83,7 +87,93 @@ onMounted(() => {
         </select>
       </div>
 
-      <button type="submit" :disabled="loading">Criar Ticket</button>
+      <button type="submit" class="btn-primary" :disabled="loading">
+        {{ loading ? 'Criando...' : 'Criar Ticket' }}
+      </button>
     </form>
   </section>
 </template>
+
+<style scoped>
+.ticket-form {
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: var(--text-color);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+
+  padding: 12px;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 8px;
+
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 140px;
+
+  resize: vertical;
+
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+
+  border-color: var(--primary-color);
+}
+
+.btn-primary {
+  background: var(--primary-color);
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 24px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+</style>
