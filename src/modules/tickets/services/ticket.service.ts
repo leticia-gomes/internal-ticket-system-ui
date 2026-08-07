@@ -4,7 +4,9 @@ import {
   getTicketById,
   getTickets,
   updateTicket as updateTicketApi,
-  createTicket as createTicketApi
+  createTicket as createTicketApi,
+  deleteTicket as deleteTicketApi,
+
 } from '../api/ticket.api';
 import type { CreateTicketRequest } from '../types/create-ticket-request.type';
 
@@ -36,6 +38,14 @@ export class TicketService {
     data: UpdateTicketRequest,
   ): Promise<Ticket> {
     return updateTicketApi(id, data);
+  }
+
+  async delete(
+    id: number,
+  ): Promise<void> {
+
+    return deleteTicketApi(id);
+
   }
 
   async assignUser(
