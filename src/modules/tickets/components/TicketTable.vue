@@ -24,14 +24,14 @@ function formatDate(date: string): string {
         <th>Status</th>
         <th>Prioridade</th>
         <th>Responsável</th>
-        <th>Atualizado em</th>
+        <th>Última atualização</th>
         <th>Ação</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr v-for="ticket in ticketStore.tickets" :key="ticket.id">
-        <td>#{{ ticket.id }}</td>
+      <tr v-for="ticket in ticketStore.tickets" :key="ticket.id" class="ticket-row">
+        <td class="ticket-id">#{{ ticket.id }}</td>
 
         <td class="title">
           {{ ticket.title }}
@@ -49,11 +49,11 @@ function formatDate(date: string): string {
           </span>
         </td>
 
-        <td>
-          {{ ticket.assignedTo?.name ?? '-' }}
+        <td class="assigned">
+          {{ ticket.assignedTo?.name ?? 'Não atribuído' }}
         </td>
 
-        <td>
+        <td class="date">
           {{ formatDate(ticket.updatedAt) }}
         </td>
 
@@ -69,86 +69,195 @@ function formatDate(date: string): string {
       </tr>
 
       <tr v-if="!ticketStore.loading && !ticketStore.tickets.length">
-        <td colspan="6" class="empty">Nenhum ticket encontrado.</td>
+        <td colspan="7" class="empty">Nenhum ticket encontrado.</td>
       </tr>
 
       <tr v-if="ticketStore.loading">
-        <td colspan="6" class="empty">Carregando tickets...</td>
+        <td colspan="7" class="empty">Carregando tickets...</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <style scoped>
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+thead {
+  background: #f8fafc;
+}
+
+th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border-color);
+}
+
+td {
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f2f5;
+  vertical-align: middle;
+}
+
+.ticket-row {
+  transition: background-color 0.15s ease;
+}
+
+.ticket-row:hover {
+  background: #fafbfc;
+}
+
+.ticket-row:last-child td {
+  border-bottom: none;
+}
+
+.ticket-id {
+  color: var(--text-light);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .title {
+  max-width: 280px;
   font-weight: 600;
   color: var(--text-color);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.assigned {
+  color: var(--text-color);
+}
+
+.date {
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
 .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 5px 10px;
+
   border-radius: 20px;
+
   font-size: 12px;
   font-weight: 600;
+
+  white-space: nowrap;
 }
+
 .status.open {
   background: #dbeafe;
   color: #1d4ed8;
 }
+
 .status.in_progress {
   background: #fef3c7;
   color: #92400e;
 }
+
 .status.resolved {
   background: #dcfce7;
   color: #166534;
 }
+
 .status.closed {
   background: #e5e7eb;
   color: #374151;
 }
+
 .priority.low {
   background: #dcfce7;
   color: #166534;
 }
+
 .priority.medium {
   background: #fef3c7;
   color: #92400e;
 }
+
 .priority.high {
   background: #fed7aa;
   color: #9a3412;
 }
+
 .priority.urgent {
   background: #fee2e2;
   color: #991b1b;
 }
+
 .actions {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
 }
+
 .action {
   border: none;
-  padding: 6px 12px;
+  padding: 7px 10px;
+
   border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 600;
+
   text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
+
+.action:hover {
+  transform: translateY(-1px);
+}
+
 .view {
-  background: #e0f2fe;
-  color: #0369a1;
+  background: #eff6ff;
+  color: #2563eb;
 }
+
+.view:hover {
+  background: #dbeafe;
+}
+
 .edit {
   background: #fef3c7;
   color: #92400e;
 }
-.delete {
-  background: #fee2e2;
-  color: #991b1b;
+
+.edit:hover {
+  background: #fde68a;
 }
+
+.delete {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.delete:hover {
+  background: #fee2e2;
+}
+
 .empty {
+  padding: 40px 20px;
   text-align: center;
-  padding: 30px;
   color: var(--text-light);
 }
 </style>
