@@ -1,0 +1,22 @@
+:root {
+  --primary-color: #060e27;
+  --primary-hover: #013874;
+
+  --secondary-color: #f7941d;
+
+  --success-color: #2e7d32;
+  --danger-color: #d32f2f;
+  --warning-color: #f9a825;
+
+  --background-color: #f5f7fa;
+  --card-color: #ffffff;
+
+  --text-color: #1f2937;
+  --text-light: #6b7280;
+
+  --border-color: #e5e7eb;
+
+  --radius: 8px;
+
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}

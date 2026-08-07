@@ -37,30 +37,84 @@ async function submit() {
 
 <template>
   <form @submit.prevent="submit">
-    <input v-model="form.title" />
+    <div class="field">
+      <label> Descrição </label>
 
-    <textarea v-model="form.description" />
+      <textarea v-model="form.description" placeholder="Descreva o problema ou solicitação" />
+    </div>
 
-    <select v-model="form.status">
-      <option value="OPEN">OPEN</option>
+    <div class="field">
+      <label> Status </label>
 
-      <option value="IN_PROGRESS">IN_PROGRESS</option>
+      <select v-model="form.status">
+        <option value="OPEN">Aberto</option>
 
-      <option value="RESOLVED">RESOLVED</option>
+        <option value="IN_PROGRESS">Em andamento</option>
 
-      <option value="CLOSED">CLOSED</option>
-    </select>
+        <option value="RESOLVED">Resolvido</option>
 
-    <select v-model="form.priority">
-      <option value="LOW">LOW</option>
+        <option value="CLOSED">Fechado</option>
+      </select>
+    </div>
 
-      <option value="MEDIUM">MEDIUM</option>
+    <div class="field">
+      <label> Prioridade </label>
 
-      <option value="HIGH">HIGH</option>
+      <select v-model="form.priority">
+        <option value="LOW">Baixa</option>
 
-      <option value="URGENT">URGENT</option>
-    </select>
+        <option value="MEDIUM">Média</option>
 
-    <button>Save</button>
+        <option value="HIGH">Alta</option>
+
+        <option value="URGENT">Urgente</option>
+      </select>
+    </div>
+
+    <button class="btn-primary">Salvar</button>
   </form>
 </template>
+
+<style scoped>
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: inherit;
+}
+select {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: white;
+}
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+</style>
