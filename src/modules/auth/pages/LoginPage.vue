@@ -45,7 +45,7 @@ async function handleSubmit() {
 
 <template>
   <div class="login-card">
-    <div class="logo">Global Sonic</div>
+    <div class="logo">GS System</div>
 
     <h1>Internal Ticket System</h1>
 

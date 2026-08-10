@@ -1,6 +1,6 @@
 <template>
   <aside class="sidebar">
-    <div class="logo">Global Sonic</div>
+    <div class="logo">GS System</div>
 
     <nav>
       <RouterLink to="/tickets"> 🎫 Tickets </RouterLink>

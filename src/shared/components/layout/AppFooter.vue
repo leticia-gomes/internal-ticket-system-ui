@@ -1,8 +1,7 @@
 <template>
   <footer class="footer">
     <span>
-      © {{ new Date().getFullYear() }} Global Sonic - Internal Ticket System | @ Letícia Gomes
-      Ribeiro
+      © {{ new Date().getFullYear() }} GS - Internal Ticket System | @ Letícia Gomes Ribeiro
     </span>
   </footer>
 </template>
