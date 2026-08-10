@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 import { AuthService } from '../services/auth.service'
 import { authStorage } from '@/shared/storage/auth.storage'
 import { useAuthStore } from '../stores/auth.store'
+import axios from 'axios'
 
 const authService = new AuthService()
 const authStore = useAuthStore()
@@ -35,8 +36,26 @@ async function handleSubmit() {
     })
 
     router.push('/dashboard')
-  } catch {
-    error.value = 'Invalid credentials'
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const response = error.response?.data
+
+      if (response?.code === 'VALIDATION_ERROR' && response.errors) {
+        const messages = response.errors
+          .map((item: { field: string; message: string }) => `${item.field}: ${item.message}`)
+          .join('\n')
+
+        alert(`${response.message}\n\n${messages}`)
+
+        return
+      }
+
+      alert(response?.message ?? 'Credencial inválida.')
+
+      return
+    }
+
+    alert('Credencial inválida.')
   } finally {
     loading.value = false
   }
